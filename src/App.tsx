@@ -6,10 +6,28 @@ type RevealStyle = CSSProperties & {
   '--reveal-delay'?: string
 }
 
+const COUNT_WORDS = ['Una', 'Dos', 'Tres', 'Cuatro', 'Cinco', 'Seis']
+
+function countWord(n: number) {
+  return COUNT_WORDS[n - 1] ?? String(n)
+}
+
 function App() {
   const heroStyle: RevealStyle = {
     '--reveal-delay': '70ms',
   }
+
+  const path = window.location.pathname.replace(/\/+$/, '').toLowerCase()
+  const isSushi = path === '/sushi'
+
+  const visibleRestaurants = isSushi
+    ? restaurants.filter((r) =>
+        ['sushiboom', 'greenboom'].includes(r.name.toLowerCase()),
+      )
+    : restaurants
+
+  const count = visibleRestaurants.length
+  const noun = count === 1 ? 'propuesta irresistible' : 'propuestas irresistibles'
 
   return (
     <>
@@ -26,14 +44,14 @@ function App() {
             <p className="eyebrow">Cartas digitales</p>
             <h1>Nuestras cartas</h1>
             <p className="introduction">
-              Tres propuestas irresistibles. Descubrí tu favorita y abrí la
+              {countWord(count)} {noun}. Descubrí tu favorita y abrí la
               carta en un toque.
             </p>
           </header>
 
           <section aria-label="Cartas digitales disponibles">
             <ul className="restaurant-list">
-              {restaurants.map((restaurant, index) => (
+              {visibleRestaurants.map((restaurant, index) => (
                 <RestaurantCard
                   key={restaurant.name}
                   restaurant={restaurant}
