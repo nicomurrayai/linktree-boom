@@ -8,6 +8,11 @@ type RevealStyle = CSSProperties & {
 
 const COUNT_WORDS = ['Una', 'Dos', 'Tres', 'Cuatro', 'Cinco', 'Seis']
 
+const SUSHI_HREFS: Record<string, string> = {
+  sushiboom: 'https://www.lacartaa.com/sushiboom-palermo',
+  greenboom: 'https://www.lacartaa.com/greenboom-palermo',
+}
+
 function countWord(n: number) {
   return COUNT_WORDS[n - 1] ?? String(n)
 }
@@ -21,9 +26,11 @@ function App() {
   const isSushi = path === '/sushi'
 
   const visibleRestaurants = isSushi
-    ? restaurants.filter((r) =>
-        ['sushiboom', 'greenboom'].includes(r.name.toLowerCase()),
-      )
+    ? restaurants.flatMap((restaurant) => {
+        const href = SUSHI_HREFS[restaurant.name.toLowerCase()]
+
+        return href ? [{ ...restaurant, href }] : []
+      })
     : restaurants
 
   const count = visibleRestaurants.length
