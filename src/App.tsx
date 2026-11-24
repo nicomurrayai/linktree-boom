@@ -8,7 +8,7 @@ type RevealStyle = CSSProperties & {
 
 const COUNT_WORDS = ['Una', 'Dos', 'Tres', 'Cuatro', 'Cinco', 'Seis']
 
-const SUSHI_HREFS: Record<string, string> = {
+const PALERMO_HREFS: Record<string, string> = {
   sushiboom: 'https://www.lacartaa.com/sushiboom-palermo',
   greenboom: 'https://www.lacartaa.com/greenboom-palermo',
 }
@@ -23,11 +23,11 @@ function App() {
   }
 
   const path = window.location.pathname.replace(/\/+$/, '').toLowerCase()
-  const isSushi = path === '/sushi'
+  const isPalermo = path === '/palermo'
 
-  const visibleRestaurants = isSushi
+  const visibleRestaurants = isPalermo
     ? restaurants.flatMap((restaurant) => {
-        const href = SUSHI_HREFS[restaurant.name.toLowerCase()]
+        const href = PALERMO_HREFS[restaurant.name.toLowerCase()]
 
         return href ? [{ ...restaurant, href }] : []
       })

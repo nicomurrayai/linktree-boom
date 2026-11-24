@@ -1,4 +1,7 @@
 {
+  "redirects": [
+    { "source": "/sushi", "destination": "/palermo", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ]
